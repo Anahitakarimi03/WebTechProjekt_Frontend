@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 type Priority = 'LOW' | 'MEDIUM' | 'HIGH'
 
@@ -11,11 +11,12 @@ interface Entry {
   priority: Priority
 }
 
-const entries = ref<Entry[]>([
-  { id: 1, name: 'Einkaufen', done: false, dueDate: '2026-10-14', priority: 'MEDIUM' },
-  { id: 2, name: 'WebTech M2 abgeben', done: false, dueDate: '2026-10-20', priority: 'HIGH' },
-  { id: 3, name: 'Wäsche waschen', done: true, dueDate: '2026-10-12', priority: 'LOW' },
-])
+const entries = ref<Entry[]>([])
+onMounted(async () => {
+  const response = await fetch('http://localhost:8080/')
+  entries.value = await response.json()
+})
+
 </script>
 
 <template>
