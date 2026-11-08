@@ -13,7 +13,7 @@ interface Entry {
 
 const entries = ref<Entry[]>([])
 onMounted(async () => {
-  const response = await fetch('http://localhost:8080/')
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/`)
   entries.value = await response.json()
 })
 
